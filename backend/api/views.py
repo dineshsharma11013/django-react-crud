@@ -10,6 +10,7 @@ def ContactView(request):
     if request.method == 'GET':
         contact = Enquery.objects.all()
         contactSerializer = EnquerySerializer(contact, many=True)
+        print(contactSerializer.data)
         return Response(contactSerializer.data)
 
     elif request.method == 'POST':
@@ -17,7 +18,7 @@ def ContactView(request):
         contactSerializer = EnquerySerializer(data=request.data)
         if contactSerializer.is_valid():
             contactSerializer.save()
-            return Response(contactSerializer.data, status=status.HTTP_201_CREATED)
+            return Response({"msg":"data inserted successfully"}, status=status.HTTP_201_CREATED)
 
         return Response(contactSerializer.errors)
 
@@ -37,12 +38,12 @@ def contactDetailsView(request, id):
         contactSerializer = EnquerySerializer(contact ,data=request.data)
         if contactSerializer.is_valid():
             contactSerializer.save()
-            return Response(contactSerializer.data, status=status.HTTP_200_OK)
+            return Response({"msg":"data updated successfully"}, status=status.HTTP_200_OK)
         return Response(contactSerializer.errors)
     
     elif request.method == 'DELETE':
         contact.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"msg":"data deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
 

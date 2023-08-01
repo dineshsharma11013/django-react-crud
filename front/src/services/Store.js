@@ -3,10 +3,11 @@ import crudSlice  from './features/crudSlice'
 
 const store = configureStore({
     reducer:{
-        crud:crudSlice.reducer,
+        app:crudSlice
     }
 })
 
 export default store;
+
 
 
