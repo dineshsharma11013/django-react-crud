@@ -35,6 +35,7 @@ def contactDetailsView(request, id):
         return Response(contactSerializer.data, status=status.HTTP_200_OK)        
 
     elif request.method == 'PUT':
+        print(request.data)
         contactSerializer = EnquerySerializer(contact ,data=request.data)
         if contactSerializer.is_valid():
             contactSerializer.save()

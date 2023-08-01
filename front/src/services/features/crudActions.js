@@ -68,10 +68,10 @@ export const getData = createAsyncThunk(
 
   export const updateData = createAsyncThunk(
     'updateData',
-    async(id, {rejectWithValue})=>{
+    async(data, {rejectWithValue})=>{
         try{
-          const response = await API.put(`/contact/${id}`);
-            console.log(response.data);
+          const response = await API.put(`/contact/${data.id}`, data);
+           // console.log(response.data);
             return response.data;
         }
         catch(error)
