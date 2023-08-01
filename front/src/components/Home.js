@@ -1,15 +1,23 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import { submitData } from '../services/features/crudActions'
 
 const Home = () => {
     const [data, setData] = useState({})
+    const dispatch = useDispatch();
 
     const handleInput =(e)=>{
         setData({...data, [e.target.name]:e.target.value})
     }
 
+    useEffect(()=>{
+      saveData()
+    },[])
+
     const saveData = ()=>{
         console.log(data)
+        dispatch(submitData())
     }
 
   return (

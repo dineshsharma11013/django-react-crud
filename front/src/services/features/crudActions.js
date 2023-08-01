@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import API from "../API";
+import axios from "axios";
 
 export const submitData = createAsyncThunk(
     'submitData',
-    async(data, {rejectWithValue})=>{
+    async(args, {rejectWithValue})=>{
         try{
-            const output = await API.post('/contact', data);
+            const output = await axios.get('http://127.0.0.1:8000/api/contact');
             console.log(output)
         }
         catch(error)
@@ -14,6 +14,9 @@ export const submitData = createAsyncThunk(
         }
     }
 )
+
+
+
 
 
 
