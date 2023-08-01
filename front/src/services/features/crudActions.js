@@ -1,22 +1,86 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import API from '../API'
 
-export const submitData = createAsyncThunk(
-    'submitData',
+export const getData = createAsyncThunk(
+    'getAllData',
     async(args, {rejectWithValue})=>{
         try{
-            const output = await axios.get('http://127.0.0.1:8000/api/contact');
-            console.log(output)
+          const response = await API.get('/contact');
+           // console.log(response.data);
+            return response.data;
         }
         catch(error)
         {
-            console.log(error)
+          console.log(error);
+          //console.log(rejectWithValue(error.response.data))
         }
     }
-)
+  )
 
 
+  export const insertData = createAsyncThunk(
+    'insertData',
+    async(data, {rejectWithValue})=>{
+        try{
+          const response = await API.post('/contact', data);
+            console.log(response.data);
+            return response.data;
+        }
+        catch(error)
+        {
+          console.log(error);
+          //console.log(rejectWithValue(error.response.data))
+        }
+    }
+  )  
 
+  export const removeData = createAsyncThunk(
+    'removeData',
+    async(id, {rejectWithValue})=>{
+        try{
+          const response = await API.delete(`/contact/${id}`);
+            console.log(response.data);
+            return response.data;
+        }
+        catch(error)
+        {
+          console.log(error);
+          //console.log(rejectWithValue(error.response.data))
+        }
+    }
+  )  
+
+  export const editData = createAsyncThunk(
+    'editData',
+    async(id, {rejectWithValue})=>{
+        try{
+          const response = await API.get(`/contact/${id}`);
+            console.log(response.data);
+            return response.data;
+        }
+        catch(error)
+        {
+          console.log(error);
+          //console.log(rejectWithValue(error.response.data))
+        }
+    }
+  )  
+
+  export const updateData = createAsyncThunk(
+    'updateData',
+    async(id, {rejectWithValue})=>{
+        try{
+          const response = await API.put(`/contact/${id}`);
+            console.log(response.data);
+            return response.data;
+        }
+        catch(error)
+        {
+          console.log(error);
+          //console.log(rejectWithValue(error.response.data))
+        }
+    }
+  )  
 
 
 

@@ -1,24 +1,40 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import { submitData } from '../services/features/crudActions'
+import { getData, insertData, removeData } from '../services/features/crudActions'
+import {Link} from 'react-router-dom'
 
 const Home = () => {
     const [data, setData] = useState({})
     const dispatch = useDispatch();
+
+    const state = useSelector((state)=>{
+      return state.app;
+    });
+
 
     const handleInput =(e)=>{
         setData({...data, [e.target.name]:e.target.value})
     }
 
     useEffect(()=>{
-      saveData()
+      dispatch(getData());
+     // console.log(state.users)
     },[])
 
+   
     const saveData = ()=>{
         console.log(data)
-        dispatch(submitData())
+        dispatch(insertData(data))
+        dispatch(getData());
     }
+
+    const deleteData = (id)=>{
+      console.log(id)
+      dispatch(removeData(id))
+      //dispatch(getData())
+    }
+
 
   return (
    <div className="container mt-3">
@@ -43,6 +59,38 @@ const Home = () => {
    
     <button type="button" onClick={()=>saveData()} className="btn btn-primary">Submit</button>
   </form>
+    
+  <p>Total {state.users.length}</p>
+
+  <table className="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+{
+  state.users.map((item, index)=>{
+    return (
+  
+    <tr key={index}>
+      <th scope="row">{index+1}</th>
+      <td>{item.name}</td>
+      <td>{item.email}</td>
+      <td>
+      <Link className="btn btn-primary btn-sm" to={'/update/'+item.id}>Edit</Link>
+      <button type="button" className="btn btn-danger btn-sm" onClick={()=>deleteData(item.id)} >Delete</button>
+      </td>
+    </tr>
+    )
+  })
+}
+</tbody>
+</table>  
+
 </div>
 
   )
