@@ -5,7 +5,8 @@ import { getData, insertData, removeData } from '../services/features/crudAction
 import {Link} from 'react-router-dom'
 
 const Home = () => {
-    const [data, setData] = useState({})
+  const [open, setOpen] = useState(false);  
+  const [data, setData] = useState({})
     const dispatch = useDispatch();
 
     const state = useSelector((state)=>{
@@ -26,13 +27,24 @@ const Home = () => {
     const saveData = ()=>{
         console.log(data)
         dispatch(insertData(data))
+        setData({})
+        setOpen(true);
         dispatch(getData());
+        setTimeout(() => {
+          setOpen(false);
+          
+        }, 3000);
+        
     }
 
     const deleteData = (id)=>{
       console.log(id)
       dispatch(removeData(id))
-      //dispatch(getData())
+      setOpen(true);
+        setTimeout(() => {
+          setOpen(false);
+          dispatch(getData());
+        }, 3000);
     }
 
 
@@ -54,12 +66,23 @@ const Home = () => {
     </div>
     <div className="mb-3">
       <label htmlFor="pwd">Gender:</label>
-      <input type="text" className="form-control" name="gender" onChange={handleInput} />
+      <select className="form-select" name="gender" onChange={handleInput}>
+      <option>Please Select</option>
+      <option value="male">Male</option>
+      <option value="female">Female</option>
+    </select>
+     
     </div>
    
     <button type="button" onClick={()=>saveData()} className="btn btn-primary">Submit</button>
   </form>
-    
+{open ? 
+(<div>
+{state.msg} 
+</div>)
+: '' }  
+  
+
   <p>Total {state.users.length}</p>
 
   <table className="table">
