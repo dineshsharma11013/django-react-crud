@@ -1,0 +1,11 @@
+1. https://www.geeksforgeeks.org/django-rest-api-crud-with-drf/ ---- check for url parameter access
+2. https://codevoweb.com/build-crud-api-with-django-rest-framework/  --- generic view --- imp.
+
+
+
+
+
+
+
+
+

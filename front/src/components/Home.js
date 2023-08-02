@@ -37,15 +37,15 @@ const Home = () => {
         
     }
 
-    const deleteData = (id)=>{
-      console.log(id)
-      dispatch(removeData(id))
-      setOpen(true);
-        setTimeout(() => {
-          setOpen(false);
-          dispatch(getData());
-        }, 3000);
-    }
+    // const deleteData = (id)=>{
+    //   console.log(id)
+    //   dispatch(removeData(id))
+    //   dispatch(getData());
+    //   setOpen(true);
+    //     setTimeout(() => {
+    //       setOpen(false);
+    //     }, 3000);
+    // }
 
 
   return (
@@ -105,7 +105,7 @@ const Home = () => {
       <td>{item.email}</td>
       <td>
       <Link className="btn btn-primary btn-sm" to={'/update/'+item.id}>Edit</Link>
-      <button type="button" className="btn btn-danger btn-sm" onClick={()=>deleteData(item.id)} >Delete</button>
+      <button type="button" className="btn btn-danger btn-sm" onClick={()=>dispatch(removeData(item.id))} >Delete</button>
       </td>
     </tr>
     )

@@ -8,17 +8,20 @@ from .models import Enquery, EnquerySerializer
 @api_view(['GET', 'POST'])
 def ContactView(request):
     if request.method == 'GET':
+        # if request.query_params['cat']:    
+        #     cat_param = request.query_params['cat']
+        #     print(cat_param)
         contact = Enquery.objects.all()
         contactSerializer = EnquerySerializer(contact, many=True)
-        print(contactSerializer.data)
+       # print(contactSerializer.data)
         return Response(contactSerializer.data)
 
     elif request.method == 'POST':
-        print(request.data)
+       # print(request.data)
         contactSerializer = EnquerySerializer(data=request.data)
         if contactSerializer.is_valid():
             contactSerializer.save()
-            return Response({"msg":"data inserted successfully"}, status=status.HTTP_201_CREATED)
+            return Response("data inserted successfully", status=status.HTTP_201_CREATED)
 
         return Response(contactSerializer.errors)
 
@@ -28,14 +31,14 @@ def contactDetailsView(request, id):
     try:
         contact = Enquery.objects.get(id=id)
     except Enquery.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)    
+        return Response({"msg":"data not available"},status=status.HTTP_404_NOT_FOUND)    
 
     if request.method == 'GET':
         contactSerializer = EnquerySerializer(contact)
         return Response(contactSerializer.data, status=status.HTTP_200_OK)        
 
     elif request.method == 'PUT':
-        print(request.data)
+        #print(request.data)
         contactSerializer = EnquerySerializer(contact ,data=request.data)
         if contactSerializer.is_valid():
             contactSerializer.save()
@@ -43,8 +46,8 @@ def contactDetailsView(request, id):
         return Response(contactSerializer.errors)
     
     elif request.method == 'DELETE':
-        contact.delete()
-        return Response({"msg":"data deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+         contact.delete()
+         return Response({"msg":"data deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
 
 
 
